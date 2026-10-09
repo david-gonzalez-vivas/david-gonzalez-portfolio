@@ -1,0 +1,9 @@
+{
+  "name": "Carlos David Gonzalez Vivas — Portfolio",
+  "short_name": "David Gonzalez",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F3F0E8",
+  "theme_color": "#153D35",
+  "icons": [{"src":"apple-touch-icon.png","sizes":"180x180","type":"image/png"}]
+}
