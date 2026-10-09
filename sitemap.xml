@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Replace YOUR-DOMAIN.example with the final public domain before production. -->
-  <url><loc>https://YOUR-DOMAIN.example/</loc></url>
-  <url><loc>https://YOUR-DOMAIN.example/build.html</loc></url>
-  <url><loc>https://YOUR-DOMAIN.example/analyze.html</loc></url>
-  <url><loc>https://YOUR-DOMAIN.example/improve.html</loc></url>
-  <url><loc>https://YOUR-DOMAIN.example/operate.html</loc></url>
+  <url><loc>https://main.dq7y7n7yacxy4.amplifyapp.com/</loc></url>
+  <url><loc>https://main.dq7y7n7yacxy4.amplifyapp.com/build.html</loc></url>
+  <url><loc>https://main.dq7y7n7yacxy4.amplifyapp.com/analyze.html</loc></url>
+  <url><loc>https://main.dq7y7n7yacxy4.amplifyapp.com/improve.html</loc></url>
+  <url><loc>https://main.dq7y7n7yacxy4.amplifyapp.com/operate.html</loc></url>
 </urlset>
