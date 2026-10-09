@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace with the final public domain before production:
-Sitemap: https://YOUR-DOMAIN.example/sitemap.xml
+Sitemap: https://main.dq7y7n7yacxy4.amplifyapp.com/sitemap.xml
