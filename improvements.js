@@ -1,4 +1,4 @@
-// v46 — radar interactions + mobile Selected Work carousel + pixel-art accents
+// v47 — radar interactions + mobile carousel + pixel accents + intro mountain parallax
 (()=>{
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
@@ -29,16 +29,22 @@ if(projects&&projects.children.length){
  let ticking=false;projects.addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{let best=0,dist=Infinity;cards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-projects.offsetLeft-projects.scrollLeft);if(d<dist){dist=d;best=i}});setCurrent(best);ticking=false;});},{passive:true});setCurrent(0);
 }
 
-// Decorative header signature inspired by the social preview: mountains + one bird.
-const siteHeader=document.querySelector('.site-header');
-if(siteHeader&&!siteHeader.querySelector('.header-pixel-landscape')){
- const landscape=document.createElement('div');landscape.className='header-pixel-landscape';landscape.setAttribute('aria-hidden','true');landscape.innerHTML='<span class="header-mountains"></span><span class="header-mountain-cut"></span><span class="header-bird"></span>';siteHeader.appendChild(landscape);
+// Full-width mountain scene before 01 / INTRO. It travels down more slowly than the page.
+const intro=document.querySelector('#intro');
+if(intro&&!document.querySelector('.intro-mountain-parallax')){
+ const scene=document.createElement('div');scene.className='intro-mountain-parallax';scene.setAttribute('aria-hidden','true');scene.innerHTML='<img src="montains-paralax.png" alt="" decoding="async">';intro.insertAdjacentElement('beforebegin',scene);
+ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  let frame=false;
+  const updateParallax=()=>{const rect=scene.getBoundingClientRect(),vh=innerHeight;if(rect.bottom>0&&rect.top<vh){const progress=(vh-rect.top)/(vh+rect.height);const shift=Math.max(-32,Math.min(32,(progress-.5)*64));scene.style.setProperty('--mountain-shift',`${shift}px`)}frame=false};
+  addEventListener('scroll',()=>{if(!frame){frame=true;requestAnimationFrame(updateParallax)}},{passive:true});addEventListener('resize',updateParallax,{passive:true});updateParallax();
+ }
 }
 
+const siteHeader=document.querySelector('.site-header');
+if(siteHeader&&!siteHeader.querySelector('.header-pixel-landscape')){const landscape=document.createElement('div');landscape.className='header-pixel-landscape';landscape.setAttribute('aria-hidden','true');landscape.innerHTML='<span class="header-mountains"></span><span class="header-mountain-cut"></span><span class="header-bird"></span>';siteHeader.appendChild(landscape);}
+
 const interestGrid=document.querySelector('.interest-grid');
-if(interestGrid&&!interestGrid.querySelector('.mobile-pixel-sky')){
- const sky=document.createElement('div');sky.className='mobile-pixel-sky';sky.setAttribute('aria-hidden','true');sky.innerHTML='<div class="pixel-sun"><i></i></div><div class="pixel-cloud pixel-cloud-a"><i></i></div><div class="pixel-cloud pixel-cloud-b"><i></i></div>';interestGrid.appendChild(sky);
-}
+if(interestGrid&&!interestGrid.querySelector('.mobile-pixel-sky')){const sky=document.createElement('div');sky.className='mobile-pixel-sky';sky.setAttribute('aria-hidden','true');sky.innerHTML='<div class="pixel-sun"><i></i></div><div class="pixel-cloud pixel-cloud-a"><i></i></div><div class="pixel-cloud pixel-cloud-b"><i></i></div>';interestGrid.appendChild(sky);}
 
 const careerPanel=document.querySelector('.career-panel');const careerSignals=document.querySelector('#careerSignals');
 if(careerPanel&&careerSignals){careerSignals.hidden=true;const holder=document.createElement('div');holder.id='careerRadar';careerSignals.insertAdjacentElement('afterend',holder);const caption=document.createElement('p');caption.className='radar-caption';caption.textContent='DATA · WEB · QUALITY · SYSTEMS';holder.insertAdjacentElement('afterend',caption);const profiles=[[32,48,38,52],[38,52,45,68],[78,54,58,70],[82,78,72,78],[100,52,86,88]];const updateCareer=radar(holder,profiles[0]);const roles=[...document.querySelectorAll('.role[data-role]')];const sync=role=>{const i=Number(role.dataset.role)||0;updateCareer(profiles[Math.max(0,Math.min(i,profiles.length-1))]);};roles.forEach(role=>{role.addEventListener('mouseenter',()=>sync(role));role.addEventListener('focus',()=>sync(role));role.addEventListener('click',()=>sync(role));});const observer=new MutationObserver(()=>{const active=document.querySelector('.role.active[data-role]');if(active)sync(active)});roles.forEach(role=>observer.observe(role,{attributes:true,attributeFilter:['class']}));}
