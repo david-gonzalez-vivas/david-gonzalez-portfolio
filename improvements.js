@@ -1,4 +1,4 @@
-// v41 — DATA / WEB / QUALITY / SYSTEMS radar interactions
+// v44 — DATA / WEB / QUALITY / SYSTEMS radar interactions + mobile pixel-art accent
 (()=>{
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
@@ -12,37 +12,20 @@ function radar(el,initial,compact=false){
  const update=vals=>{const points=vals.map((v,i)=>pt(i,v));poly.setAttribute('points',points.map(x=>x.join(',')).join(' '));[...dots.children].forEach((d,i)=>{d.setAttribute('cx',points[i][0]);d.setAttribute('cy',points[i][1])});};
  update(initial);return update;
 }
-
-// Selected Work desktop: one active radar that reconfigures between projects.
 const projectRadar=radar(document.querySelector('#projectRadar'),[45,100,70,65]);
-document.querySelectorAll('.project').forEach(project=>{
- const update=()=>projectRadar&&projectRadar(project.dataset.profile.split(',').map(Number));
- project.addEventListener('mouseenter',update);project.addEventListener('focus',update);project.addEventListener('click',update);
-});
+document.querySelectorAll('.project').forEach(project=>{const update=()=>projectRadar&&projectRadar(project.dataset.profile.split(',').map(Number));project.addEventListener('mouseenter',update);project.addEventListener('focus',update);project.addEventListener('click',update);});
+document.querySelectorAll('.project').forEach(project=>{const content=project.children[1];if(!content||content.querySelector('.mobile-project-radar'))return;const holder=document.createElement('div');holder.className='mobile-project-radar';holder.setAttribute('aria-label','Project discipline profile');content.appendChild(holder);radar(holder,project.dataset.profile.split(',').map(Number),true);});
 
-// Selected Work mobile: each card gets the same visual language instead of mini bars.
-document.querySelectorAll('.project').forEach(project=>{
- const content=project.children[1];
- if(!content||content.querySelector('.mobile-project-radar'))return;
- const holder=document.createElement('div');holder.className='mobile-project-radar';holder.setAttribute('aria-label','Project discipline profile');
- content.appendChild(holder);
- radar(holder,project.dataset.profile.split(',').map(Number),true);
-});
-
-// Built over time: the radar grows with accumulated experience, while its balance changes by chapter.
-const careerPanel=document.querySelector('.career-panel');
-const careerSignals=document.querySelector('#careerSignals');
-if(careerPanel&&careerSignals){
- careerSignals.hidden=true;
- const holder=document.createElement('div');holder.id='careerRadar';careerSignals.insertAdjacentElement('afterend',holder);
- const caption=document.createElement('p');caption.className='radar-caption';caption.textContent='DATA · WEB · QUALITY · SYSTEMS';holder.insertAdjacentElement('afterend',caption);
- // Apte intentionally shifts away from web toward data, systems and quality.
- const profiles=[[32,48,38,52],[38,52,45,68],[78,54,58,70],[82,78,72,78],[100,52,86,88]];
- const updateCareer=radar(holder,profiles[0]);
- const roles=[...document.querySelectorAll('.role[data-role]')];
- const sync=role=>{const i=Number(role.dataset.role)||0;updateCareer(profiles[Math.max(0,Math.min(i,profiles.length-1))]);};
- roles.forEach(role=>{role.addEventListener('mouseenter',()=>sync(role));role.addEventListener('focus',()=>sync(role));role.addEventListener('click',()=>sync(role));});
- const observer=new MutationObserver(()=>{const active=document.querySelector('.role.active[data-role]');if(active)sync(active)});
- roles.forEach(role=>observer.observe(role,{attributes:true,attributeFilter:['class']}));
+// Mobile-only decorative sixth tile: pixel-art sun and clouds bridge Interests into the Shiba scene.
+const interestGrid=document.querySelector('.interest-grid');
+if(interestGrid&&!interestGrid.querySelector('.mobile-pixel-sky')){
+ const sky=document.createElement('div');
+ sky.className='mobile-pixel-sky';
+ sky.setAttribute('aria-hidden','true');
+ sky.innerHTML='<div class="pixel-sun"><i></i></div><div class="pixel-cloud pixel-cloud-a"><i></i></div><div class="pixel-cloud pixel-cloud-b"><i></i></div>';
+ interestGrid.appendChild(sky);
 }
+
+const careerPanel=document.querySelector('.career-panel');const careerSignals=document.querySelector('#careerSignals');
+if(careerPanel&&careerSignals){careerSignals.hidden=true;const holder=document.createElement('div');holder.id='careerRadar';careerSignals.insertAdjacentElement('afterend',holder);const caption=document.createElement('p');caption.className='radar-caption';caption.textContent='DATA · WEB · QUALITY · SYSTEMS';holder.insertAdjacentElement('afterend',caption);const profiles=[[32,48,38,52],[38,52,45,68],[78,54,58,70],[82,78,72,78],[100,52,86,88]];const updateCareer=radar(holder,profiles[0]);const roles=[...document.querySelectorAll('.role[data-role]')];const sync=role=>{const i=Number(role.dataset.role)||0;updateCareer(profiles[Math.max(0,Math.min(i,profiles.length-1))]);};roles.forEach(role=>{role.addEventListener('mouseenter',()=>sync(role));role.addEventListener('focus',()=>sync(role));role.addEventListener('click',()=>sync(role));});const observer=new MutationObserver(()=>{const active=document.querySelector('.role.active[data-role]');if(active)sync(active)});roles.forEach(role=>observer.observe(role,{attributes:true,attributeFilter:['class']}));}
 })();
