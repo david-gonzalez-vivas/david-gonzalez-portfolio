@@ -1,0 +1,35 @@
+/* v40 — discipline radar + mobile layout refinements */
+.discipline-radar{width:100%;max-width:300px;margin:22px auto 8px;display:block;overflow:visible}
+.radar-grid{fill:none;stroke:var(--line);stroke-width:1;opacity:.65}
+.radar-axis{stroke:var(--line);stroke-width:1;opacity:.55}
+.radar-shape{fill:rgba(21,61,53,.12);stroke:var(--green);stroke-width:2;transition:points .5s ease}
+.radar-dot{fill:var(--paper);stroke:var(--green);stroke-width:2;transition:cx .5s ease,cy .5s ease}
+.radar-label{fill:var(--muted);font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+.radar-value{fill:var(--green);font:700 8px ui-monospace,SFMono-Regular,Menlo,monospace}
+.profile-panel .discipline-radar{margin-top:18px}
+.profile-panel .radar-caption,.education-radar-panel .radar-caption{margin:12px 0 0;font:700 9px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:var(--muted);text-align:center}
+.education-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:clamp(32px,6vw,80px);align-items:start}
+.education-radar-panel{position:sticky;top:100px;border:1px solid var(--line);padding:22px;min-width:0}
+.education-radar-panel .panel-label{color:var(--green)}
+.education-stage{margin-top:12px;font:400 22px/1.15 Georgia,serif;color:var(--green)}
+.education-item{cursor:pointer}
+.education-item.active{background:rgba(21,61,53,.045)}
+.education-item:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(max-width:900px){.education-layout{grid-template-columns:1fr}.education-radar-panel{position:relative;top:auto;max-width:420px;width:100%}}
+@media(max-width:800px){
+  .about-details,.background-block,.interests-block,.education-layout,.education-list,.education-item,.education-item>div:last-child{min-width:0;max-width:100%}
+  .education-item{grid-template-columns:64px minmax(0,1fr);gap:18px;padding:24px 0}
+  .education-item strong,.education-item span,.education-item small{max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal}
+  .education-item span{line-height:1.35}
+  .interest-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 18px;overflow:visible;padding-bottom:0}
+  .interest{min-width:0}
+}
+@media(max-width:600px){
+  .education-item{grid-template-columns:54px minmax(0,1fr);gap:14px}
+  .edu-mark{width:54px;height:54px}
+  .interest-grid{grid-template-columns:repeat(2,minmax(0,1fr));justify-content:stretch}
+  .interest-icon{width:58px;height:58px}
+  .discipline-radar{max-width:270px}
+}
+@media(max-width:360px){.interest-grid{grid-template-columns:1fr 1fr;gap:24px 10px}.education-item{grid-template-columns:48px minmax(0,1fr)}.edu-mark{width:48px;height:48px}}
+@media(prefers-reduced-motion:reduce){.radar-shape,.radar-dot{transition:none}}
