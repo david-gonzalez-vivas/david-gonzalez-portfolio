@@ -1,4 +1,4 @@
-/* v40 — discipline radar + mobile layout refinements */
+/* v42 — discipline radar + mobile layout refinements */
 .discipline-radar{width:100%;max-width:300px;margin:22px auto 8px;display:block;overflow:visible}
 .radar-grid{fill:none;stroke:var(--line);stroke-width:1;opacity:.65}
 .radar-axis{stroke:var(--line);stroke-width:1;opacity:.55}
@@ -10,6 +10,7 @@
 #careerSignals{display:none}
 .education-layout{display:block}
 .education-radar-panel{display:none}
+.mobile-project-radar{display:none}
 @media(max-width:800px){
   .about-details,.background-block,.interests-block,.education-list,.education-item,.education-item>div:last-child{min-width:0;max-width:100%}
   .education-item{grid-template-columns:64px minmax(0,1fr);gap:18px;padding:24px 0}
@@ -24,6 +25,15 @@
   .interest-grid{grid-template-columns:repeat(2,minmax(0,1fr));justify-content:stretch}
   .interest-icon{width:58px;height:58px}
   .discipline-radar{max-width:270px}
+  .profile-panel{display:none}
+  .mobile-project-radar{display:block;margin:18px 0 2px;max-width:250px}
+  .mobile-project-radar .discipline-radar{max-width:230px;margin:0;}
+  /* Active project cards turn green on mobile, so invert only the radar palette for contrast. */
+  .project.active .mobile-project-radar .radar-grid,.project:hover .mobile-project-radar .radar-grid,.project:focus-visible .mobile-project-radar .radar-grid{stroke:rgba(243,240,232,.42)}
+  .project.active .mobile-project-radar .radar-axis,.project:hover .mobile-project-radar .radar-axis,.project:focus-visible .mobile-project-radar .radar-axis{stroke:rgba(243,240,232,.38)}
+  .project.active .mobile-project-radar .radar-shape,.project:hover .mobile-project-radar .radar-shape,.project:focus-visible .mobile-project-radar .radar-shape{fill:rgba(243,240,232,.12);stroke:var(--cream)}
+  .project.active .mobile-project-radar .radar-dot,.project:hover .mobile-project-radar .radar-dot,.project:focus-visible .mobile-project-radar .radar-dot{fill:var(--green);stroke:var(--cream)}
+  .project.active .mobile-project-radar .radar-label,.project:hover .mobile-project-radar .radar-label,.project:focus-visible .mobile-project-radar .radar-label{fill:var(--cream)}
 }
-@media(max-width:360px){.interest-grid{grid-template-columns:1fr 1fr;gap:24px 10px}.education-item{grid-template-columns:48px minmax(0,1fr)}.edu-mark{width:48px;height:48px}}
+@media(max-width:360px){.interest-grid{grid-template-columns:1fr 1fr;gap:24px 10px}.education-item{grid-template-columns:48px minmax(0,1fr)}.edu-mark{width:48px;height:48px}.mobile-project-radar .discipline-radar{max-width:210px}}
 @media(prefers-reduced-motion:reduce){.radar-shape,.radar-dot{transition:none}}
