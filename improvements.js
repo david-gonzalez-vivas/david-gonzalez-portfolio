@@ -1,5 +1,33 @@
-// v54 — radar interactions + mobile carousel + responsive mountain treatment
+// v55 — restore About portrait art + radar interactions + mobile carousel + responsive mountain treatment
 (()=>{
+// Restore the original About composition removed from the compact homepage markup.
+const aboutPortrait=document.querySelector('#aboutPortrait');
+if(aboutPortrait&&!aboutPortrait.querySelector('.portrait-art')){
+ const art=document.createElement('div');
+ art.className='portrait-art';
+ art.setAttribute('aria-hidden','true');
+ art.innerHTML=`
+  <span class="art-shape art-arc" data-from="-42,32,-18" data-to="0,0,0"></span>
+  <span class="art-shape art-orbit" data-from="46,-35,22" data-to="0,0,0"></span>
+  <span class="art-shape art-block" data-from="-54,-18,-13" data-to="0,0,0"></span>
+  <span class="art-shape art-circle art-circle-a" data-from="38,48,0" data-to="0,0,0"></span>
+  <span class="art-shape art-circle art-circle-b" data-from="-30,-45,0" data-to="0,0,0"></span>
+  <span class="art-shape art-cross" data-from="58,22,18" data-to="0,0,0"></span>
+  <span class="art-shape art-dots" data-from="-48,45,-8" data-to="0,0,0"></span>
+  <span class="art-shape art-rule art-rule-a" data-from="65,-28,12" data-to="0,0,0"></span>
+  <span class="art-shape art-rule art-rule-b" data-from="-55,20,-18" data-to="0,0,0"></span>
+  <span class="art-code" data-from="-58,-35,-6" data-to="0,0,0"><code>const solve = problem =&gt; {<br>&nbsp;&nbsp;research(problem);<br>&nbsp;&nbsp;structure();<br>&nbsp;&nbsp;build();<br>&nbsp;&nbsp;verify();<br>};</code></span>
+  <span class="art-stack" data-from="62,42,8" data-to="0,0,0">// BUILD<br>// AUTOMATE<br>// ANALYZE<br>// IMPROVE<br>// REPEAT</span>
+  <span class="art-disciplines" data-from="52,-44,5" data-to="0,0,0">DATA<br>SYSTEMS<br>WEB<br>QA<br>AUTOMATION</span>`;
+ aboutPortrait.prepend(art);
+ if(!aboutPortrait.querySelector('.portrait-meta')){
+  const meta=document.createElement('div');
+  meta.className='portrait-meta';
+  meta.innerHTML='<span>CARLOS DAVID</span><span>PROFILE / 05</span><i></i><span>GUATEMALA</span><span>REMOTE</span><span>SYSTEM STATUS</span><span>AVAILABLE <b></b></span>';
+  aboutPortrait.appendChild(meta);
+ }
+}
+
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
  if(!el)return null;
