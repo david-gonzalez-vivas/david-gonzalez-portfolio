@@ -19,7 +19,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Data, web, UX and systems portfolio of Carlos David Gonzalez Vivas — building, analyzing, improving and operating digital products.">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="improvements.css">
 <script defer src="script.js"></script>
+<script defer src="improvements.js"></script>
 </head>
 <body><a class="skip-link" href="#intro">Skip to content</a>
 <header class="site-header"><a class="brand" href="#intro">CARLOS DAVID GONZALEZ VIVAS</a><nav aria-label="Primary"><a href="#education">EDUCATION</a><a href="#work">WORK</a><a href="#experience">EXPERIENCE</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a></nav></header>
@@ -32,18 +34,6 @@
   </div>
   <div class="hero-meta"><span>15+ YEARS EXPERIENCE</span><span>INFORMATION SYSTEMS</span><span>WEB DEVELOPMENT</span><span>QA &amp; AUTOMATION</span></div>
 </section>
-  <section id="education" class="education-strip" aria-labelledby="education-title">
-    <div class="education-head">
-      <span class="education-label" id="education-title">ACADEMIC FOUNDATION</span>
-      <div class="education-rule" aria-hidden="true"></div>
-    </div>
-    <div class="education-items">
-      <article><span>2012 — 2018</span><strong>Bachelor’s Degree</strong><p>Computer Science</p><small>Universidad Galileo</small></article>
-      <article><span>2022 — 2024</span><strong>Specialization</strong><p>User Experience Research &amp; Design</p><small>University of Michigan</small></article>
-      <article><span>2022 — 2024</span><strong>Master of Science</strong><p>Information Technology</p><small>Universidad Galileo</small></article>
-    </div>
-  </section>
-
 <section id="work" class="section light work"><div class="section-kicker">02 — SELECTED WORK / SYSTEMS IN PRACTICE</div><h2>Selected work.</h2><p class="section-intro">A few problems that show how the disciplines connect in practice.</p>
 <div class="work-layout"><div class="projects" role="list">
 <article class="project active" tabindex="0" data-profile="45,100,70,65" data-href="build.html" aria-label="Open Build case study"><div class="project-no">01 · BUILD</div><div><h3>Building digital products for different kinds of businesses</h3><p>Over the years, I’ve designed, built and evolved websites and digital platforms for different needs — from news and publishing to e-commerce, subscriptions, advertising, portfolios and content-driven experiences.</p><div class="tags">WORDPRESS · HTML/CSS · JAVASCRIPT · E-COMMERCE · MEMBERSHIPS · ANALYTICS</div></div><div class="project-arrow">↗</div></article>
@@ -51,7 +41,7 @@
 <article class="project" tabindex="0" data-profile="55,80,100,45" data-href="improve.html" aria-label="Open Improve case study"><div class="project-no">03 · IMPROVE</div><div><h3>Improving the experience behind every interaction</h3><p>Building something is only the beginning. Across websites and digital systems, I’ve worked to understand how people actually use them — identifying friction, improving flows, validating changes and using behavioral data to make the experience clearer and more effective.</p><div class="tags">UX/UI · GOOGLE ANALYTICS · USER FLOWS · RESEARCH · VALIDATION · OPTIMIZATION</div></div><div class="project-arrow">↗</div></article>
 <article class="project" tabindex="0" data-profile="40,55,75,100" data-href="operate.html" aria-label="Open Operate case study"><div class="project-no">04 · OPERATE</div><div><h3>Keeping digital platforms running when it matters</h3><p>Behind every digital product is an infrastructure that has to remain available, secure and adaptable. I’ve built and managed environments for real-world platforms, from cloud infrastructure and databases to traffic management, security and incident response.</p><div class="tags">AWS · CLOUD · DATABASES · CLOUDFLARE · SECURITY · SCALABILITY</div></div><div class="project-arrow">↗</div></article>
 </div>
-<aside class="profile-panel"><div class="panel-label">ACTIVE PROJECT PROFILE</div><p>Relative presence of each discipline in the selected project.</p><div id="projectBars"></div></aside></div>
+<aside class="profile-panel"><div class="panel-label">ACTIVE PROJECT PROFILE</div><p>Relative presence of each discipline in the selected project.</p><div id="projectBars" hidden></div><div id="projectRadar"></div><p class="radar-caption">DATA · WEB · QUALITY · SYSTEMS</p></aside></div>
 </section>
 
 <section id="approach" class="section dark approach"><div class="section-kicker">03 — HOW I WORK / APPROACH</div><div class="approach-grid"><div><h2>How I work.</h2><p class="dark-lead">Technology changes constantly. My process is more consistent: understand the problem, find the structure, pay attention to the details, and learn whatever the solution requires.</p></div><div class="principles">
@@ -104,13 +94,14 @@
   </div>
 
   <div class="about-details">
-    <section class="background-block" aria-labelledby="background-title">
+    <section id="education" class="background-block" aria-labelledby="background-title">
       <h3 id="background-title">BACKGROUND</h3>
-      <div class="education-list">
-        <article class="education-item"><div class="edu-mark edu-mark-logo" aria-hidden="true"><img src="galileo-mark.png" alt="" loading="lazy" decoding="async"></div><div><strong>Master of Science</strong><span>Information Technology · Universidad Galileo</span><small>2022 — 2024</small></div></article>
-        <article class="education-item"><div class="edu-mark edu-mark-logo edu-mark-um" aria-hidden="true"><img src="michigan-mark.png" alt="" loading="lazy" decoding="async"></div><div><strong>Specialization</strong><span>User Experience Research &amp; Design · University of Michigan</span><small>2022 — 2024</small></div></article>
-        <article class="education-item"><div class="edu-mark edu-mark-logo" aria-hidden="true"><img src="galileo-mark.png" alt="" loading="lazy" decoding="async"></div><div><strong>Bachelor’s Degree</strong><span>Computer Science · Universidad Galileo</span><small>2012 — 2018</small></div></article>
+      <div class="education-layout"><div class="education-list">
+        <article class="education-item" tabindex="0" data-education-profile="100,78,88,92" data-education-stage="Master of Science"><div class="edu-mark edu-mark-logo" aria-hidden="true"><img src="galileo-mark.png" alt="" loading="lazy" decoding="async"></div><div><strong>Master of Science</strong><span>Information Technology · Universidad Galileo</span><small>2022 — 2024</small></div></article>
+        <article class="education-item" tabindex="0" data-education-profile="72,88,92,62" data-education-stage="UX Research &amp; Design" ><div class="edu-mark edu-mark-logo edu-mark-um" aria-hidden="true"><img src="michigan-mark.png" alt="" loading="lazy" decoding="async"></div><div><strong>Specialization</strong><span>User Experience Research &amp; Design · University of Michigan</span><small>2022 — 2024</small></div></article>
+        <article class="education-item" tabindex="0" data-education-profile="62,68,54,66" data-education-stage="Computer Science"><div class="edu-mark edu-mark-logo" aria-hidden="true"><img src="galileo-mark.png" alt="" loading="lazy" decoding="async"></div><div><strong>Bachelor’s Degree</strong><span>Computer Science · Universidad Galileo</span><small>2012 — 2018</small></div></article>
       </div>
+      <aside class="education-radar-panel"><div class="panel-label">EDUCATION PROFILE</div><div class="education-stage" id="educationStage">Master of Science</div><div id="educationRadar"></div><p class="radar-caption">DATA · WEB · QUALITY · SYSTEMS</p></aside></div>
     </section>
 
     <section class="interests-block" aria-labelledby="interests-title">
