@@ -1,5 +1,19 @@
-// v55 — restore About portrait art + radar interactions + mobile carousel + responsive mountain treatment
+// v56 — hero type reveal + About portrait art + radar interactions + mobile carousel + responsive mountain treatment
 (()=>{
+// Refined one-time hero reveal: words arrive in sequence, letters settle subtly into place.
+const heroTitle=document.querySelector('#intro.hero h1');
+if(heroTitle&&!heroTitle.dataset.revealReady){
+ heroTitle.dataset.revealReady='true';
+ const words=[...heroTitle.querySelectorAll(':scope > span')];
+ words.forEach((word,wordIndex)=>{
+  const text=word.textContent;
+  word.setAttribute('aria-label',text);
+  word.classList.add('hero-reveal-word');
+  word.innerHTML=[...text].map((char,charIndex)=>`<span class="hero-reveal-letter" aria-hidden="true" style="--word:${wordIndex};--letter:${charIndex}">${char===' '?'&nbsp;':char}</span>`).join('');
+ });
+ requestAnimationFrame(()=>requestAnimationFrame(()=>heroTitle.classList.add('hero-reveal-ready')));
+}
+
 // Restore the original About composition removed from the compact homepage markup.
 const aboutPortrait=document.querySelector('#aboutPortrait');
 if(aboutPortrait&&!aboutPortrait.querySelector('.portrait-art')){
