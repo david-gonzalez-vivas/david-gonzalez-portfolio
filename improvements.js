@@ -1,4 +1,4 @@
-// v45 — radar interactions + mobile Selected Work carousel + pixel-art accent
+// v46 — radar interactions + mobile Selected Work carousel + pixel-art accents
 (()=>{
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
@@ -27,6 +27,12 @@ if(projects&&projects.children.length){
  const go=i=>{const card=cards[Math.max(0,Math.min(i,cards.length-1))];if(card)projects.scrollTo({left:card.offsetLeft-projects.offsetLeft,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
  prev.addEventListener('click',()=>go(current-1));next.addEventListener('click',()=>go(current+1));
  let ticking=false;projects.addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{let best=0,dist=Infinity;cards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-projects.offsetLeft-projects.scrollLeft);if(d<dist){dist=d;best=i}});setCurrent(best);ticking=false;});},{passive:true});setCurrent(0);
+}
+
+// Decorative header signature inspired by the social preview: mountains + one bird.
+const siteHeader=document.querySelector('.site-header');
+if(siteHeader&&!siteHeader.querySelector('.header-pixel-landscape')){
+ const landscape=document.createElement('div');landscape.className='header-pixel-landscape';landscape.setAttribute('aria-hidden','true');landscape.innerHTML='<span class="header-mountains"></span><span class="header-mountain-cut"></span><span class="header-bird"></span>';siteHeader.appendChild(landscape);
 }
 
 const interestGrid=document.querySelector('.interest-grid');
