@@ -1,4 +1,4 @@
-// v44 — DATA / WEB / QUALITY / SYSTEMS radar interactions + mobile pixel-art accent
+// v45 — radar interactions + mobile Selected Work carousel + pixel-art accent
 (()=>{
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
@@ -16,14 +16,22 @@ const projectRadar=radar(document.querySelector('#projectRadar'),[45,100,70,65])
 document.querySelectorAll('.project').forEach(project=>{const update=()=>projectRadar&&projectRadar(project.dataset.profile.split(',').map(Number));project.addEventListener('mouseenter',update);project.addEventListener('focus',update);project.addEventListener('click',update);});
 document.querySelectorAll('.project').forEach(project=>{const content=project.children[1];if(!content||content.querySelector('.mobile-project-radar'))return;const holder=document.createElement('div');holder.className='mobile-project-radar';holder.setAttribute('aria-label','Project discipline profile');content.appendChild(holder);radar(holder,project.dataset.profile.split(',').map(Number),true);});
 
-// Mobile-only decorative sixth tile: pixel-art sun and clouds bridge Interests into the Shiba scene.
+const projects=document.querySelector('.projects');
+if(projects&&projects.children.length){
+ const cards=[...projects.querySelectorAll('.project')];
+ const nav=document.createElement('div');nav.className='mobile-work-nav';nav.setAttribute('aria-label','Selected work carousel controls');
+ nav.innerHTML=`<span class="mobile-work-count" aria-live="polite">01 / ${String(cards.length).padStart(2,'0')}</span><div class="mobile-work-dots" aria-hidden="true">${cards.map((_,i)=>`<span class="mobile-work-dot${i===0?' active':''}"></span>`).join('')}</div><div class="mobile-work-arrows"><button class="mobile-work-arrow work-prev" type="button" aria-label="Previous project">←</button><button class="mobile-work-arrow work-next" type="button" aria-label="Next project">→</button></div>`;
+ projects.insertAdjacentElement('afterend',nav);
+ const count=nav.querySelector('.mobile-work-count'),dots=[...nav.querySelectorAll('.mobile-work-dot')],prev=nav.querySelector('.work-prev'),next=nav.querySelector('.work-next');let current=0;
+ const setCurrent=i=>{current=Math.max(0,Math.min(i,cards.length-1));count.textContent=`${String(current+1).padStart(2,'0')} / ${String(cards.length).padStart(2,'0')}`;dots.forEach((d,n)=>d.classList.toggle('active',n===current));prev.disabled=current===0;next.disabled=current===cards.length-1;};
+ const go=i=>{const card=cards[Math.max(0,Math.min(i,cards.length-1))];if(card)projects.scrollTo({left:card.offsetLeft-projects.offsetLeft,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
+ prev.addEventListener('click',()=>go(current-1));next.addEventListener('click',()=>go(current+1));
+ let ticking=false;projects.addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{let best=0,dist=Infinity;cards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-projects.offsetLeft-projects.scrollLeft);if(d<dist){dist=d;best=i}});setCurrent(best);ticking=false;});},{passive:true});setCurrent(0);
+}
+
 const interestGrid=document.querySelector('.interest-grid');
 if(interestGrid&&!interestGrid.querySelector('.mobile-pixel-sky')){
- const sky=document.createElement('div');
- sky.className='mobile-pixel-sky';
- sky.setAttribute('aria-hidden','true');
- sky.innerHTML='<div class="pixel-sun"><i></i></div><div class="pixel-cloud pixel-cloud-a"><i></i></div><div class="pixel-cloud pixel-cloud-b"><i></i></div>';
- interestGrid.appendChild(sky);
+ const sky=document.createElement('div');sky.className='mobile-pixel-sky';sky.setAttribute('aria-hidden','true');sky.innerHTML='<div class="pixel-sun"><i></i></div><div class="pixel-cloud pixel-cloud-a"><i></i></div><div class="pixel-cloud pixel-cloud-b"><i></i></div>';interestGrid.appendChild(sky);
 }
 
 const careerPanel=document.querySelector('.career-panel');const careerSignals=document.querySelector('#careerSignals');
