@@ -1,4 +1,4 @@
-// v47 — radar interactions + mobile carousel + pixel accents + intro mountain parallax
+// v48 — radar interactions + mobile carousel + intro mountain parallax
 (()=>{
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
@@ -29,7 +29,6 @@ if(projects&&projects.children.length){
  let ticking=false;projects.addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{let best=0,dist=Infinity;cards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-projects.offsetLeft-projects.scrollLeft);if(d<dist){dist=d;best=i}});setCurrent(best);ticking=false;});},{passive:true});setCurrent(0);
 }
 
-// Full-width mountain scene before 01 / INTRO. It travels down more slowly than the page.
 const intro=document.querySelector('#intro');
 if(intro&&!document.querySelector('.intro-mountain-parallax')){
  const scene=document.createElement('div');scene.className='intro-mountain-parallax';scene.setAttribute('aria-hidden','true');scene.innerHTML='<img src="montains-paralax.png" alt="" decoding="async">';intro.insertAdjacentElement('beforebegin',scene);
@@ -39,9 +38,6 @@ if(intro&&!document.querySelector('.intro-mountain-parallax')){
   addEventListener('scroll',()=>{if(!frame){frame=true;requestAnimationFrame(updateParallax)}},{passive:true});addEventListener('resize',updateParallax,{passive:true});updateParallax();
  }
 }
-
-const siteHeader=document.querySelector('.site-header');
-if(siteHeader&&!siteHeader.querySelector('.header-pixel-landscape')){const landscape=document.createElement('div');landscape.className='header-pixel-landscape';landscape.setAttribute('aria-hidden','true');landscape.innerHTML='<span class="header-mountains"></span><span class="header-mountain-cut"></span><span class="header-bird"></span>';siteHeader.appendChild(landscape);}
 
 const interestGrid=document.querySelector('.interest-grid');
 if(interestGrid&&!interestGrid.querySelector('.mobile-pixel-sky')){const sky=document.createElement('div');sky.className='mobile-pixel-sky';sky.setAttribute('aria-hidden','true');sky.innerHTML='<div class="pixel-sun"><i></i></div><div class="pixel-cloud pixel-cloud-a"><i></i></div><div class="pixel-cloud pixel-cloud-b"><i></i></div>';interestGrid.appendChild(sky);}
