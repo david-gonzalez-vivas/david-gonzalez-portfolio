@@ -1,4 +1,4 @@
-// v48 — radar interactions + mobile carousel + intro mountain parallax
+// v49 — radar interactions + mobile carousel + refined intro mountain parallax
 (()=>{
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
@@ -34,8 +34,19 @@ if(intro&&!document.querySelector('.intro-mountain-parallax')){
  const scene=document.createElement('div');scene.className='intro-mountain-parallax';scene.setAttribute('aria-hidden','true');scene.innerHTML='<img src="montains-paralax.png" alt="" decoding="async">';intro.insertAdjacentElement('beforebegin',scene);
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
   let frame=false;
-  const updateParallax=()=>{const rect=scene.getBoundingClientRect(),vh=innerHeight;if(rect.bottom>0&&rect.top<vh){const progress=(vh-rect.top)/(vh+rect.height);const shift=Math.max(-32,Math.min(32,(progress-.5)*64));scene.style.setProperty('--mountain-shift',`${shift}px`)}frame=false};
-  addEventListener('scroll',()=>{if(!frame){frame=true;requestAnimationFrame(updateParallax)}},{passive:true});addEventListener('resize',updateParallax,{passive:true});updateParallax();
+  const updateParallax=()=>{
+   const rect=scene.getBoundingClientRect();
+   if(rect.bottom>0&&rect.top<innerHeight){
+    // Keep the overlap stable and use only a subtle counter-scroll. Large travel looked detached from the intro block.
+    const center=rect.top+rect.height/2;
+    const viewportCenter=innerHeight/2;
+    const shift=Math.max(-12,Math.min(12,(viewportCenter-center)*0.035));
+    scene.style.setProperty('--mountain-shift',`${shift.toFixed(2)}px`);
+   }
+   frame=false;
+  };
+  const requestParallax=()=>{if(!frame){frame=true;requestAnimationFrame(updateParallax)}};
+  addEventListener('scroll',requestParallax,{passive:true});addEventListener('resize',requestParallax,{passive:true});updateParallax();
  }
 }
 
