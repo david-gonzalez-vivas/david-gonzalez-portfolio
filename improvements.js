@@ -1,4 +1,4 @@
-// v53 — radar interactions + mobile carousel + hero-integrated mountain parallax
+// v54 — radar interactions + mobile carousel + responsive mountain treatment
 (()=>{
 const names=['DATA','WEB','QUALITY','SYSTEMS'];
 function radar(el,initial,compact=false){
@@ -16,13 +16,14 @@ document.querySelectorAll('.project').forEach(project=>{const content=project.ch
 const projects=document.querySelector('.projects');
 if(projects&&projects.children.length){const cards=[...projects.querySelectorAll('.project')];const nav=document.createElement('div');nav.className='mobile-work-nav';nav.setAttribute('aria-label','Selected work carousel controls');nav.innerHTML=`<span class="mobile-work-count" aria-live="polite">01 / ${String(cards.length).padStart(2,'0')}</span><div class="mobile-work-dots" aria-hidden="true">${cards.map((_,i)=>`<span class="mobile-work-dot${i===0?' active':''}"></span>`).join('')}</div><div class="mobile-work-arrows"><button class="mobile-work-arrow work-prev" type="button" aria-label="Previous project">←</button><button class="mobile-work-arrow work-next" type="button" aria-label="Next project">→</button></div>`;projects.insertAdjacentElement('afterend',nav);const count=nav.querySelector('.mobile-work-count'),dots=[...nav.querySelectorAll('.mobile-work-dot')],prev=nav.querySelector('.work-prev'),next=nav.querySelector('.work-next');let current=0;const setCurrent=i=>{current=Math.max(0,Math.min(i,cards.length-1));count.textContent=`${String(current+1).padStart(2,'0')} / ${String(cards.length).padStart(2,'0')}`;dots.forEach((d,n)=>d.classList.toggle('active',n===current));prev.disabled=current===0;next.disabled=current===cards.length-1;};const go=i=>{const card=cards[Math.max(0,Math.min(i,cards.length-1))];if(card)projects.scrollTo({left:card.offsetLeft-projects.offsetLeft,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};prev.addEventListener('click',()=>go(current-1));next.addEventListener('click',()=>go(current+1));let ticking=false;projects.addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{let best=0,dist=Infinity;cards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-projects.offsetLeft-projects.scrollLeft);if(d<dist){dist=d;best=i}});setCurrent(best);ticking=false;});},{passive:true});setCurrent(0);}
 
-// The mountains live inside the hero instead of between sections. They move at a slower rate than the document.
+// Desktop: mountains remain at the bottom of the hero with parallax. Mobile: a static opener before 01 / INTRO.
 const hero=document.querySelector('#intro.hero');
 if(hero&&!hero.querySelector('.hero-mountains')){
  const mountains=document.createElement('div');mountains.className='hero-mountains';mountains.setAttribute('aria-hidden','true');mountains.innerHTML='<img src="montains-paralax.png" alt="" decoding="async">';hero.appendChild(mountains);
+ const mobileStyle=document.createElement('style');mobileStyle.textContent='@media(max-width:600px){#intro.hero{padding-top:clamp(145px,40vw,185px)!important;padding-bottom:70px!important}.hero-mountains{top:0!important;bottom:auto!important;height:clamp(115px,32vw,150px)!important}.hero-mountains img{bottom:0!important;width:100%!important;max-width:100%!important;transform:translateX(-50%)!important;will-change:auto!important}.hero-mountains:after{height:18%!important}}@media(max-width:360px){#intro.hero{padding-top:128px!important}.hero-mountains{height:108px!important}}';document.head.appendChild(mobileStyle);
  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
   let raf=0;
-  const updateMountains=()=>{raf=0;const rect=hero.getBoundingClientRect();const travelled=Math.max(0,Math.min(hero.offsetHeight,-rect.top));const shift=travelled*.12;mountains.style.setProperty('--hero-mountain-y',`${shift.toFixed(1)}px`);};
+  const updateMountains=()=>{raf=0;if(matchMedia('(max-width:600px)').matches)return;const rect=hero.getBoundingClientRect();const travelled=Math.max(0,Math.min(hero.offsetHeight,-rect.top));const shift=travelled*.12;mountains.style.setProperty('--hero-mountain-y',`${shift.toFixed(1)}px`);};
   const requestMountains=()=>{if(!raf)raf=requestAnimationFrame(updateMountains)};
   addEventListener('scroll',requestMountains,{passive:true});addEventListener('resize',requestMountains,{passive:true});updateMountains();
  }
